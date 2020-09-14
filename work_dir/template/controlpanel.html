@@ -4,22 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="../javascript/jquery.min.js"></script>
+    <script src="../javascript/popper.min.js"></script>
+    <script src="../javascript/bootstrap.min.js"></script>
     <title>Control Panel</title>
 </head>
 
-<center>
-    <div class="nivi">
-        <a href="?page=home">主页</a>
-        <a href="/">论坛</a>
-        <a href="?page=block">板块管理</a>
-        <a href="?page=user">用户管理</a>
-        <a href="?page=setting">论坛设置</a>
-    </div>
-</center>
-
-
 <body>
+    
+{{template "adminnav.html"}}
+{{template "adminhome.html"}}
 
 </body>
 
 </html>
+

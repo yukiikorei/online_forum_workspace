@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="../javascript/jquery.min.js"></script>
+    <script src="../javascript/popper.min.js"></script>
+    <script src="../javascript/bootstrap.min.js"></script>
+    <title>论坛板块管理</title>
+</head>
+
+<script>
+    function doPost(to, p) {  // to:提交动作（action）,p:参数
+        var myForm = document.createElement("form");
+        myForm.method = "post";
+        myForm.action = to;
+        for (var i in p) {
+            var myInput = document.createElement("input");
+            myInput.setAttribute("name", i);  // 为input对象设置name
+            myInput.setAttribute("value", p[i]);  // 为input对象设置value
+            myForm.appendChild(myInput);
+        }
+        document.body.appendChild(myForm);
+        myForm.submit();
+        document.body.removeChild(myForm);  // 提交后移除创建的form
+    }
+
+    function selectBlock(blockID){
+        document.getElementById("selectedBlock").setAttribute("value",blockID)
+        console.log(blockID)
+    }
+</script>
+
+<body>
+
+{{template "adminnav.html"}}    
+
+
+<div class="container">
+    <br>
+    <div class="container">
+        <button type="button" class="btn btn-primary float-md-right" data-toggle="modal" data-target="#addforummodal">+ 分论坛</button>
+        <h2>分论坛-板块管理</h2>
+    </div>  
+    <br>
+
+    <!-- 分论坛添加 模态框 -->
+    <div class="modal fade" id="addforummodal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">添加分论坛</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <form action="/admin/block?action=addforum" method="POST">
+                    <!-- 模态框主体 -->
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="newforumname">分论坛名称:</label>
+                            <input type="text" class="form-control" id="newforumname" name="name" placeholder="new forum name">
+                        </div>
+                    </div>
+
+                    <!-- 模态框底部 -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">提交</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 板块添加 模态框 -->
+    <div class="modal fade" id="addblockmodal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">添加板块</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <form action="/admin/block?action=addblock" method="POST">
+                    <!-- 模态框主体 -->
+                    <div class="modal-body">
+                        <!-- 表单隐藏属性 -->
+                        <input type="text" class="form-control " id="addblockforumName" name="forumName" value="" style="display: none;">
+                        <div class="form-group">
+                            <label for="newblockmname">板块名称:</label>
+                            <input type="text" class="form-control" id="newblockname" name="name" placeholder="new block name">
+                        </div>
+                        <div class="form-group">
+                            <label for="newblockmasterid">版主ID:</label>
+                            <input type="text" class="form-control" id="newblockmasterid" name="masterID" placeholder="block master‘s ID">
+                        </div>
+                    </div>
+
+                    <!-- 模态框底部 -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">提交</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 更换版主 模态框-->
+    <div class="modal fade" id="changeMasterModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">更换版主</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <form action="/admin/block?action=changeMaster" method="POST">
+                    <!-- 模态框主体 -->
+                    <div class="modal-body">
+                        <input type="text" name="blockID" id="selectedBlock" style="display: none;" value="">
+                        <div class="form-group">
+                            <label for="newMasterID">新版主ID:</label>
+                            <input type="text" class="form-control" id="newMasterID" name="masterID" placeholder="master ID">
+                        </div>
+                    </div>
+                    <!-- 模态框底部 -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">提交</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    {{range . }}
+    <div class="card">
+        <div class="card-header">
+            <button type="button" class="btn btn-info float-lg-right mx-1"   
+                    onclick="document.getElementById('addblockforumName').setAttribute('value','{{.Name}}')" data-toggle="modal" data-target="#addblockmodal">+ 板块</button>
+            <button type="button" class="btn btn-danger float-lg-right mx-1" 
+                    onclick="javascript:doPost('/admin/block?action=deleteforum',{'name':'{{.Name}}'})">x 删除</button>
+                {{.Name}}
+                创建时间:{{.CreatedAt.Format "2006/01/02 15:04:05"}}
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>板块名称</th>
+                        <th>创建时间</th>
+                        <th>版主</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{range .Blocks}}
+                    <tr>
+                        <td><a href="#">{{.Name}}</a></td>
+                        <td>{{.CreatedAt.Format "2006/01/02 15:04:05"}}</td>
+                        <td><a href="#">{{.MasterID}}</a></td>
+                        <td><a href="#" onclick="javascript:selectBlock('{{.ID}}')" class="text-primary" data-toggle="modal" data-target="#changeMasterModal">更换版主</a>/
+                            <a href="javascript:doPost('/admin/block?action=deleteblock',{'blockID':'{{.ID}}'})" 
+                                            class="text-danger">x删除</a></td>
+                    </tr>
+                    {{end}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br>
+    {{end}}
+</div>
+
+</body>
+</html>

@@ -4,18 +4,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="../javascript/jquery.min.js"></script>
+    <script src="../javascript/popper.min.js"></script>
+    <script src="../javascript/bootstrap.min.js"></script>
+
     <title>ADMIN LOGIN</title>
 </head>
 
+<style>
+    .center-in-center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+</style>
+
 <body>
-    <form action="" method="post">
 
-        <p>username:<input type="text" name="userID" /></p>
-        <p>password: <input type="password" name="password"></p>
-        <p>{{.info}}</p>
+    <div class="container col-md-3 center-in-center">
+        <div class="card bg-light ">
+            <div class="card-body">
+                <h4 class="mb-3">管理员登录</h>
+                <form action="/admin/login" method="POST">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="admin ID"  name="userID">
+                    </div>
+                
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" placeholder="password" name="password">
+                    </div>
+                    <button type="submit" class="btn btn-info">登录</button>
+                    {{if ne .info ""}}
+                        <p class="text-danger">{{.info}}</p>
+                    {{end}}
+                </form>
+            </div>
+        </div>
+    </div>
 
-        <button type="submit">login</button>
-    </form>
+
 </body>
 
 </html>

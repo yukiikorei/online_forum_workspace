@@ -1,0 +1,46 @@
+#
+#   在线论坛使用的简单配置文件config
+#
+# 这是在线论坛使用的主配置文件，你应该阅读论坛的文档或者使用说明，以了解这
+# 这些配置的意义，以及设置他们的时机和方法。本配置文件采用toml格式。
+
+#=============全局设置=========================================
+
+#=============网络设置=========================================
+[network]
+    AllowDomain = [
+        "127.0.0.1",
+        "localhost"
+    ]
+    AllowHTTP   = true
+    HTTPPort    = 9999
+    AllowHTTPS  = false
+    HTTPSPort   = 8888
+
+#============管理员设置========================================
+[admin]
+    AdminID     = "admin"
+    AdminName   = "admin"
+    Pass        = "admin"
+    Email       = "admin@gmail.com"
+
+    AllowRemote = true
+
+#============数据库设置=========================================
+[database]
+    Type        = "mysql"
+    Host        = "127.0.0.1"
+    Database    = "forum"
+    Port        = "3306"
+    User        = "root"
+    Pass        = "test"
+
+
+#============JWT设置============================================
+[JWT]
+    SignedKey  = "mySimpleKey"
+
+
+#
+#   设置结束
+#
