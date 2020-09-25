@@ -1,0 +1,50 @@
+# Caddy(1)-Caddy 简介和安装
+
+
+
+## 简介
+
+[Caddy](https://caddyserver.com/)是一个简单高效的应用帮助你快速地搭建一些服务。Caddy在传输层(transport layer)到应用层(application layer)工作。
+
+本文主要介绍caddy的使用方法，在阅读本文之前，你必须对HTTP协议和web服务器有最基础的了解。
+
+本文主要参考自[Caddy官方文档](https://caddyserver.com/docs/)，关于本文提及的内容，你应该可以从文档中找出对应介绍或者更详细的说明。
+
+
+
+## 安装方式
+
+caddy由go语言编写，官方提供多平台下的二进制文件，可直接运行。更进一步地可以对caddy的运行环境进行一些配置，本文仅介绍在常用Linux/GNU发行版下的安装方法。
+
+1. [下载](https://caddyserver.com/download)caddy二进制文件，移入PATH
+
+    ```sh
+    $ sudo mv caddy /usr/bin/
+    ```
+
+2. 创建Caddy用户组，加入caddy用户
+
+    ```sh
+    $ sudo groupadd --system caddy
+    $ sudo useradd --system \
+        --gid caddy \
+        --create-home \
+        --home-dir /var/lib/caddy \
+        --shell /usr/sbin/nologin \
+        --comment "Caddy web server" \
+        caddy
+    ```
+
+3. 创建并启动caddy服务
+
+    3.1 下载 [`caddy.service`](https://github.com/caddyserver/dist/blob/master/init/caddy.service)如果你使用文件配置caddy
+
+    3.2 下载[`caddy-api.service`](https://github.com/caddyserver/dist/blob/master/init/caddy-api.service)如果你使用API配置caddy
+
+    3.3 修改文件路径为`/etc/systemd/system/`
+
+    3.4 接下来可以使用`systemctl start(stop reload enable disable status)`来控制caddy服务
+
+    3.5 使用`journalctl -u caddy`查看caddy日志
+
+    

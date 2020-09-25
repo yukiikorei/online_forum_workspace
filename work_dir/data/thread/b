@@ -1,0 +1,52 @@
+# Caddy(2)-Caddy语法概念
+
+
+
+## 1. 简介
+
+参考[caddyfile concept](https://caddyserver.com/docs/caddyfile/concepts)
+
+以下是对关键内容进行说明
+
+
+
+## 2. Caddyfile结构
+
+![Caddyfile structure](https://caddyserver.com/resources/images/caddyfile-visual.png)
+
+
+<center>图1. Caddyfile结构</center>
+
+需要注意：
+
+	1. 一般全局选项块可选块(Global options block)位于文件开头
+
+   	2. 此外，一般Caddyfile的第一行是提供服务的地址(site address)
+   	3. 所有的指令(directive)和匹配器(matcher)必须在一个块里面
+   	4. 如果只有一个网站块(site block)，块的花括号是可选的(这有助于快速部署简单的服务器)
+
+
+
+## 3. 块(block)
+
+- 全局选项块(Global option block)
+
+    全局选项块用于存放一些预设的选项，方便后面读取使用，一条选项定义包括选项名和选项值
+
+- 消息块(snippet block)
+
+    消息块用于存放一些重复的指令，方便在其他块中直接引入，使用import snippet_name 就可以引入消息块
+
+- 网站块(site block)
+
+    网站块用于定于使用某一网站地址访问服务器时，服务器提供的服务，当只有一个网站块时可以省略网站块的花括号
+
+- 匹配器定义(Matcher definition)
+
+    匹配器定义说明满足一个匹配器需要的条件，匹配器名称以@开头，匹配器包括定义的匹配器和路径，指令可以使用匹配器，根据匹配器结果判断是否执行指令
+
+
+
+## 4. 更多
+
+关于一些概念的详细内容和使用方法我们在后面介绍

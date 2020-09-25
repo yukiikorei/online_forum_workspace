@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="../javascript/jquery.min.js"></script>
+    <script src="../javascript/popper.min.js"></script>
+    <script src="../javascript/bootstrap.min.js"></script>
+
+    <title>search - search query</title>
+</head>
+
+
+<body>
+
+    {{template "navi.html" .user}}
+
+    <div class="container">
+
+        <div class="card my-4">
+
+        <!-- thread 列表-->
+        <div class="card-body">
+            {{range .threads}}
+            <!--TODO: 显示一下发帖时间-->
+            <div class="list-group">
+                <div class="list-group-item"><a href="/thread/{{.ID}}" class="text-reset">[{{.ThemeName}}] {{.Tittle}}</a></div>
+            </div>
+            {{end}}
+        </div>
+
+        <!-- 理论上的选页框 -->
+        <div class="card-footer">
+            page：
+        </div>
+        
+        </div>
+
+    </div>  
+
+</body>
+
+</html>

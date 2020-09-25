@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="../javascript/jquery.min.js"></script>
+    <script src="../javascript/popper.min.js"></script>
+    <script src="../javascript/bootstrap.min.js"></script>
+
+    <title>{{.thread.Tittle}}</title>
+</head>
+
+<body>
+
+    <script>
+        function doPost(to, p) {  // to:提交动作（action）,p:参数
+            var myForm = document.createElement("form");
+            myForm.method = "post";
+            myForm.action = to;
+            for (var i in p) {
+                var myInput = document.createElement("input");
+                myInput.setAttribute("name", i);  // 为input对象设置name
+                myInput.setAttribute("value", p[i]);  // 为input对象设置value
+                myForm.appendChild(myInput);
+            }
+            document.body.appendChild(myForm);
+            myForm.submit();
+            document.body.removeChild(myForm);  // 提交后移除创建的form
+        }
+
+        function selectBlock(blockID) {
+            document.getElementById("selectedBlock").setAttribute("value", blockID)
+            console.log(blockID)
+        }
+    </script>
+
+    {{template "navi.html" .user}}
+
+    <div class="container my-4">
+        <!--内容-->
+        
+        <div class="container">
+            <div class="container my-3">
+                <a class=" text-primary" href="/block/{{.thread.BlockID}}"><-返回</a>
+            </div>    
+            {{if .user}}
+            {{if eq .user.ID .thread.UserID}}
+                <a class=" text-danger" href="javascript:doPost('',{'action':'delete'})"
+                    style="float: right;"> x 删除</a>
+            {{end}}
+            {{end}}
+            <h2>{{.thread.Tittle}}</h2>
+            <div class="text clearfix my-2" style="text-align:center;">
+                <span style="float: left;;">author : {{.thread.UserID}}</span>
+                <span style="float: right;;">createTime : {{.thread.CreatedAt.Format "2006/01/02 15:04:05"}} </span>
+            </div>
+            
+            <div class="card my-3">
+                <div class="card-body">
+                    {{.thread.Content.Content}}
+                </div>
+            </div>
+        </div>
+
+        <!--评论内容-->
+
+        <div class="container my-3">
+
+            {{range .thread.Comments}}
+            <div class="card my-2">
+                <div class="card-header">
+                    user: {{.UserID}}
+                </div>
+                <div class="card-body">
+                    {{.Content}}
+                </div>
+                <div class="card-footer">
+                    comment Time : {{.CreatedAt.Format "2006/01/02 15:04:05"}}
+                </div>
+            </div>
+            {{end}}
+
+        </div>
+
+
+
+        <!--添加评论表单-->
+
+        <div class="container my-3">
+            <form action="" method="POST" class="form-group">
+                <input type="text" name="action" value="addComment" style="display: none;">
+                <label for="#comment">评论:</label>
+                <textarea name="comment" class="form-control my-2" id="comment" cols="30" rows="10"></textarea>
+                <button type="submit" class="btn btn-primary my-2 float-right">submit</button>
+            </form>
+        </div>
+
+    </div>
+
+
+
+</body>
+
+</html>

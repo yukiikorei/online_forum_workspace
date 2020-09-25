@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="../javascript/jquery.min.js"></script>
+    <script src="../javascript/popper.min.js"></script>
+    <script src="../javascript/bootstrap.min.js"></script>
+    <title>{{.host.UserName}} - 用户信息</title>
+</head>
+<body>
+    <!--navi -->
+    {{template "navi.html" .user}}
+
+    <div class="container my-4">
+
+        {{$unchange := true}}
+        {{if .user}}
+        {{if eq .user.ID .host.ID}}
+        {{$unchange = false}}
+        <!--用户资料卡片-->
+        <div class="container my-4 ">
+            <form action="/changeUserInfo" method="POST">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="userID">ID:</label>
+                        <input type="text" name="userID" id="userID" class="form-control my-1" value="{{.host.ID}}" readonly>
+                        <label for="userName">用户名:</label>
+                        <input type="text" name="userName" id="userName" class="form-control my-1" value="{{.host.UserName}}">
+                        <label for="emal">Email:</label>
+                        <input type="text" name="email" id="email" class="form-control my-1" value="{{.host.Email}}">
+                        <label for="lastIP">最近登录:</label>
+                        <input type="text" name="lastIP" id="lastIP" class="form-control my-1" value="{{.LastIP}}" readonly>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a class="btn btn-primary text-white" href="/login" >更换用户</a>
+                    <button type="submit" class="btn btn-danger" style="float: right;">修改</button>
+                </div>
+            </div> 
+            </form>
+        </div>
+        {{end}}
+        {{end}}
+
+        {{if $unchange}}
+        <div class="container my-4 ">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <p for="userID">ID : {{.host.ID}}</p>
+                        <p for="userName">用户名 : {{.host.UserName}}</p>
+                        <p for="emal">Email: {{.host.Email}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{end}}
+
+        <!--用户发表帖子-->
+        <div class="container my-4">
+            <div class="card">
+                <div class="card-header">
+                    {{.host.UserName}}的帖子:
+                </div>
+                <!-- thread 列表-->
+                <div class="card-body">
+                    {{range .threads}}
+                    <!--TODO: 显示一下发帖时间-->
+                    <div class="list-group">
+                        <div class="list-group-item"><a href="/thread/{{.ID}}" class="text-reset">[{{.ThemeName}}]
+                                {{.Tittle}}</a></div>
+                    </div>
+                    {{end}}
+                </div>
+        
+            </div>
+        </div>
+
+
+
+    </div>
+    
+</body>
+</html>

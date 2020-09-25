@@ -165,9 +165,9 @@
                 <tbody>
                     {{range .Blocks}}
                     <tr>
-                        <td><a href="#">{{.Name}}</a></td>
+                        <td><a href="/block/{{.ID}}">{{.Name}}</a></td>
                         <td>{{.CreatedAt.Format "2006/01/02 15:04:05"}}</td>
-                        <td><a href="#">{{.MasterID}}</a></td>
+                        <td><a href="/user/{{.MasterID}}">{{.MasterID}}</a></td>
                         <td><a href="#" onclick="javascript:selectBlock('{{.ID}}')" class="text-primary" data-toggle="modal" data-target="#changeMasterModal">更换版主</a>/
                             <a href="javascript:doPost('/admin/block?action=deleteblock',{'blockID':'{{.ID}}'})" 
                                             class="text-danger">x删除</a></td>

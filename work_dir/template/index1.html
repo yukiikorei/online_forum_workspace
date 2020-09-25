@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="../javascript/jquery.min.js"></script>
+    <script src="../javascript/popper.min.js"></script>
+    <script src="../javascript/bootstrap.min.js"></script>
+
+    <title>HOME</title>
+</head>
+
+<body>
+<center>
+    <h1>论坛主页</h1>
+</center>
+
+<div class="container">
+<div class="card">
+{{if .user}}
+    欢迎你：{{.user}}
+{{else}}
+    <a href="/login">请登录</a>
+{{end}}
+</div>
+</div>  
+
+<div class="container">
+    <div class="card">
+        {{.forums}}
+    </div>
+</div>
+
+
+
+
+
+
+</body>
+
+</html>

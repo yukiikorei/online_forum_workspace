@@ -2,13 +2,221 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home page</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <script src="../javascript/jquery.min.js"></script>
+  <script src="../javascript/popper.min.js"></script>
+  <script src="../javascript/bootstrap.min.js"></script>
+  <title>主页</title>
 </head>
 
+<script>
+
+
+</script>
+<style>
+
+  .input-group {
+    width: 400px;
+  }
+
+  .dropdown {
+    margin-left: 10px;
+
+  }
+
+  .dropdown-toggle {
+    height: 30px;
+
+
+  }
+
+  .rounded {
+    height: 30px;
+    width: 30px;
+    margin-left: 5px;
+  }
+
+  .li_top {
+    margin-top: 10px;
+  }
+
+  .top_pic {
+    margin-top: 20px;
+
+  }
+
+  .btn1 {
+    margin-left: 10px;
+    height: 20px;
+    font-size: 15px;
+    text-align: center;
+    line-height: 10px;
+
+  }
+
+  .btn_option {
+    height: 30px;
+    font-size: 15px;
+    text-align: center;
+    line-height: 10px;
+  }
+
+  .modal-body {
+    padding-left: 120px;
+  }
+
+  .carousel-inner img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .hot_invitation {
+    margin-top: 20px;
+  }
+
+  .theme {
+    color: #6495ED;
+    font-weight: bold;
+  }
+
+  .img_forum {
+    height: 50px;
+    width: 50px;
+    margin-top: 15px;
+
+  }
+
+  .li_pic {
+    margin-left: 10px;
+    margin-right: 200px;
+    margin-top: 25px;
+    margin-bottom: 20px;
+
+
+  }
+
+  .a_content {
+    color: black;
+
+
+  }
+
+  .info {
+
+    position: relative;
+    top: -20px;
+    left: 40px;
+    font-size: 12px;
+    margin-left: 15px;
+  }
+
+  #test {
+    vertical-align: middle;
+
+  }
+</style>
+
 <body>
-    <h1>HOME PAGE</h1>
+
+  <!--nav-->
+  {{template "navi.html" .user}}
+
+  <!--标题，搜索-->
+  <div class="container my-5">
+    <div class="container">
+
+      <div class="my-2">
+        <h1>Online forum</h1>
+      </div>
+      <form action="/search" method="GET">
+        <div class="form-inline my-2 " style=" float: right; ">
+          <input type="text" class="form-control" name="query">
+          <button type="submit" class="btn btn-info " style=" float: right; ">search</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- 轮播图片 -->
+  <div class="container ">
+    <div id="demo" class="carousel slide" data-ride="carousel">
+
+      <!-- 指示符 -->
+      <ul class="carousel-indicators">
+        <li data-target="#demo" data-slide-to="0" class="active"></li>
+        <li data-target="#demo" data-slide-to="1"></li>
+        <li data-target="#demo" data-slide-to="2"></li>
+      </ul>
+
+      <!-- 轮播图片 -->
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="https://static.runoob.com/images/mix/img_fjords_wide.jpg">
+          <div class="carousel-caption">
+            <h3></h3>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="https://static.runoob.com/images/mix/img_nature_wide.jpg">
+          <div class="carousel-caption">
+            <h3></h3>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="https://static.runoob.com/images/mix/img_mountains_wide.jpg">
+          <div class="carousel-caption">
+            <h3></h3>
+          </div>
+        </div>
+      </div>
+
+      <!-- 左右切换按钮 -->
+
+      <a class="carousel-control-prev" href="#demo" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </a>
+
+
+      <a class="carousel-control-next" href="#demo" data-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </a>
+
+
+    </div>
+  </div>
+
+
+  <!-- 板块 -->
+  <div class="container my-3">
+    {{range .forums}}
+    <div class="container">
+      <nav class="navbar navbar-expand-sm bg-light">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <p class="theme text-info">{{.Name}}</p>
+          </li>
+        </ul>
+      </nav>
+      <div class="content">
+        <ul class="nav">
+          {{range .Blocks}}
+          <li class=" col-md-4 my-2">
+            <div id="test">
+              <h6><a href="/block/{{.ID}}" class="text-reset">{{.Name}}</a></h6>
+              <p><a href="/user/{{.MasterID}}" class=" text-reset">版主:<span class="text-secondary">{{.MasterID}}</span></a></p>
+            </div>
+          </li>
+          {{end}}
+        </ul>
+      </div>
+    </div>
+    {{end}}
+  </div>
+
+
 </body>
 
 </html>

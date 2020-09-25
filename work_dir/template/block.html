@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="../javascript/jquery.min.js"></script>
+    <script src="../javascript/popper.min.js"></script>
+    <script src="../javascript/bootstrap.min.js"></script>
+
+    <title>{{.block.SubForumName}} - {{.block.Name}}</title>
+</head>
+
+
+<body>
+
+    {{template "navi.html" .user}}
+
+    <!-- 添加thread 模态框 -->
+    <div class="modal fade" id="addThreadModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">发布帖子</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <form action="" method="POST" >
+                    <input type="text" name="action" value="addThread" style="display: none;">
+                    <!-- 模态框主体 -->
+                    <div class="modal-body ">
+                        <div class="form-group ">
+                            <label for="threadTheme">主题:</label>
+                            <select name="theme" class="form-control" id="threadTheme">
+                                {{range .block.Themes}}
+                                    <option value="{{.Name}}">{{.Name}}</option> 
+                                {{end}}
+                            </select>
+                            <label for="threadTittle">标题:</label>
+                            <input type="text" class="form-control " name="tittle" id="threadTittle">
+                            <label for="threadContent">内容:</label>
+                            <textarea name="content" id="threadContent"  class="form-control" cols="50" rows="10">thread content</textarea>
+                        </div>
+                    </div>
+
+                    <!-- 模态框底部 -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" >提交</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container">
+
+        <!-- head of page -->
+        <div class="container my-4">
+            {{if .user}}
+            {{if eq .block.MasterID .user.ID}}
+            <a class="btn btn-info float-right my-2 mx-2" href="/master/{{.block.ID}}"> ⚙ 管理</a>
+            {{end}}
+            {{end}}
+            <button class="btn btn-primary float-right my-2 mx-2" data-toggle="modal" data-target="#addThreadModal">+ 发帖</button>
+            <h1>{{.block.SubForumName}} - {{.block.Name}}</h1>
+        </div>
+
+
+
+        <div class="card">
+
+        <!--主题栏目-->    
+        <div class="card-header">
+            <div class="container">
+                <div class="card-group">
+                    select theme : 
+                    <div class="card mx-2 col-1 rounded">
+                        <a href="?theme=all" class=" text-reset">all</a>
+                    </div>
+                    {{range .block.Themes}}
+                    <div class="card mx-2 col-1 rounded">
+                        <a href="?theme={{.Name}}" class="text-reset">{{.Name}}</a>
+                    </div>
+                    {{end}}
+                </div>
+            </div>
+        </div>
+
+        <!-- thread 列表-->
+        <div class="card-body">
+            {{range .threads}}
+            <!--TODO: 显示一下发帖时间-->
+            <div class="list-group">
+                <div class="list-group-item"><a href="/thread/{{.ID}}" class="text-reset">[{{.ThemeName}}] {{.Tittle}}</a></div>
+            </div>
+            {{end}}
+        </div>
+
+        <!-- 理论上的选页框 -->
+        <div class="card-footer">
+            page：
+        </div>
+        
+        </div>
+
+    </div>  
+
+</body>
+
+</html>
